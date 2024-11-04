@@ -172,6 +172,30 @@ def generate_chi_two_plot(
 
     plt.savefig(file_name)
     if display:
+        mean, var, skew, kurt = chi2.stats(degree_of_freedom, moments='mvsk')
+        print(50 * "-")
+        print(f"For chi-square distribution with {degree_of_freedom} degrees of freedom:")
+        print(f"\nMean (μ)     = {mean:.4f}")
+        print("              • First moment")
+        print("              • Average/expected value")
+        print("              • For χ²: equals degrees of freedom")
+
+        print(f"\nVariance (σ²) = {var:.4f}")
+        print("              • Second moment")
+        print("              • Spread of the distribution")
+        print("              • For χ²: equals 2 * degrees of freedom")
+
+        print(f"\nSkewness     = {skew:.4f}")
+        print("              • Third moment")
+        print("              • Measure of asymmetry")
+        print("              • For χ²: equals √(8/degree of freedom)")
+        print("              • Positive value means right-skewed")
+
+        print(f"\nKurtosis     = {kurt:.4f}")
+        print("              • Fourth moment")
+        print("              • Measure of heaviness of tails")
+        print("              • For χ²: equals 12/degree of freedom")
+        print("              • Higher value means heavier tails")
         plt.show()
     else:
         plt.close()
@@ -207,6 +231,7 @@ def main():
         display=True,
         file_name="generated_chi_square_df_4.png",
     )
+
 
 if __name__ == "__main__" :
     main()
