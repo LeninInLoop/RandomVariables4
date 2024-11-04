@@ -154,15 +154,16 @@ def generate_random_variable(mean: float, std: float) -> List[float]:
 def generate_chi_two_plot(
         degree_of_freedom: int,
         file_name: str = "generated_chi_square.png",
-        display: bool = False
+        display: bool = False,
+        x_range: Tuple[int, int] = (0, 17)
 ):
     plt.figure(figsize=(10, 6))
-    x = np.linspace(0, 17, 1000)
+    x = np.linspace(x_range[0], x_range[1], 1000)
     chi2_pdf = chi2.pdf(x, df=degree_of_freedom)
 
     plt.plot(x, chi2_pdf, label='df=' + str(degree_of_freedom), color='blue', linewidth=2)
 
-    plt.title('Chi-square Distribution (Degree of Freedom=' + f"{degree_of_freedom}", fontsize=12)
+    plt.title('Chi-square Distribution (Degree of Freedom=' + f"{degree_of_freedom})", fontsize=12)
     plt.xlabel('x', fontsize=10)
     plt.ylabel('Probability Density', fontsize=10)
     plt.grid(True, alpha=0.3)
@@ -226,12 +227,64 @@ def main():
         file_name="chi_square_df_4.png",
     )
 
+    print(50 * "-" + "\n")
+    print("Mean Calculated: " + str(np.mean(random_variable_z)))
+    print("\nVariance Calculated: " + str(np.var(random_variable_z)) + "\n")
+
     generate_chi_two_plot(
         degree_of_freedom=4,
         display=True,
         file_name="generated_chi_square_df_4.png",
     )
 
+    random_variable_z = generate_chi2_square_variables(degree_of_freedom=1)
+
+    counted_values = count_values_by_method(
+        random_variable_z,
+        method=METHOD_COUNTER_CLASS,
+        x_range=(-2, 3)
+    )
+
+    save_pdf_and_cdf_plot_from_pdf(
+        counted_values,
+        display=True,
+        file_name="chi_square_df_1.png",
+    )
+
+    print(50 * "-" + "\n")
+    print("Mean Calculated: " + str(np.mean(random_variable_z)))
+    print("\nVariance Calculated: " + str(np.var(random_variable_z)) + "\n")
+
+    generate_chi_two_plot(
+        degree_of_freedom=1,
+        display=True,
+        file_name="generated_chi_square_df_1.png",
+    )
+
+    random_variable_z = generate_chi2_square_variables(degree_of_freedom=7)
+
+    counted_values = count_values_by_method(
+        random_variable_z,
+        method=METHOD_COUNTER_CLASS,
+        x_range=(0, 20)
+    )
+
+    save_pdf_and_cdf_plot_from_pdf(
+        counted_values,
+        display=True,
+        file_name="chi_square_df_7.png",
+    )
+
+    print(50 * "-" + "\n")
+    print("Mean Calculated: " + str(np.mean(random_variable_z)))
+    print("\nVariance Calculated: " + str(np.var(random_variable_z)) + "\n")
+
+    generate_chi_two_plot(
+        degree_of_freedom=7,
+        display=True,
+        file_name="generated_chi_square_df_7.png",
+        x_range=(0,20)
+    )
 
 if __name__ == "__main__" :
     main()
